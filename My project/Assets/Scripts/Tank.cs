@@ -28,5 +28,10 @@ public class Tank : Unit
             agent.SetDestination(enemyBase.position);
         }
     }
+
+    public void SetTargetPos(Transform target)
+    {
+        enemyBase = target;
+    }
 }
 

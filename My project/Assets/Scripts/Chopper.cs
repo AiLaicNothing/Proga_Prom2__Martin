@@ -23,4 +23,9 @@ public class Chopper : Unit
 
         if (Vector3.Distance(transform.position, target.position) <= reachDistance) index = (index + 1) % patrolPoints.Length;
     }
+
+    public void SetPatrolPoint(Transform[] points)
+    {
+        patrolPoints = points;
+    }
 }
