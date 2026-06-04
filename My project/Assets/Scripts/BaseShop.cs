@@ -9,20 +9,34 @@ public class BaseShop : MonoBehaviour
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private GameObject chopperPrefab;
 
+    [Header("Patroll")]
+    [SerializeField] private Transform patrolPoints;
+
     public void BuyTank()
     {
-        SpawnUnit(tankPrefab, 50);
+        SpawnTank(tankPrefab, 50);
     }
 
     public void BuyChopper()
     {
-        SpawnUnit(chopperPrefab, 40);
+        SpawnChopper(chopperPrefab, 40);
     }
 
-    private void SpawnUnit(GameObject prefab, int cost)
+    private void SpawnTank(GameObject prefab, int cost)
     {
         if (!EconomyManager.Instance.Spend(teamSide, cost)) return;
 
-        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject tankPrefab = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+
+        Tank tank = tankPrefab.GetComponent<Tank>();
+    }
+
+    private void SpawnChopper(GameObject prefab, int cost)
+    {
+        if (!EconomyManager.Instance.Spend(teamSide, cost)) return;
+
+        GameObject chopperPrefab = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+
+        Chopper chopper = chopperPrefab.GetComponent<Chopper>();
     }
 }
