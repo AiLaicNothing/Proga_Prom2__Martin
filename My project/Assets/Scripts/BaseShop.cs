@@ -10,7 +10,8 @@ public class BaseShop : MonoBehaviour
     [SerializeField] private GameObject chopperPrefab;
 
     [Header("Patroll")]
-    [SerializeField] private Transform patrolPoints;
+    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private Transform enemyBase;
 
     public void BuyTank()
     {
@@ -29,6 +30,7 @@ public class BaseShop : MonoBehaviour
         GameObject tankPrefab = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
 
         Tank tank = tankPrefab.GetComponent<Tank>();
+        tank.SetTargetPos(enemyBase);
     }
 
     private void SpawnChopper(GameObject prefab, int cost)
@@ -38,5 +40,6 @@ public class BaseShop : MonoBehaviour
         GameObject chopperPrefab = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
 
         Chopper chopper = chopperPrefab.GetComponent<Chopper>();
+        chopper.SetPatrolPoint(patrolPoints);
     }
 }
