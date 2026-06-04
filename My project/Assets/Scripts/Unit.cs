@@ -27,4 +27,9 @@ public abstract class Unit : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetTeam(TeamSide teamSide)
+    {
+        this.teamSide = teamSide;
+    }
 }
