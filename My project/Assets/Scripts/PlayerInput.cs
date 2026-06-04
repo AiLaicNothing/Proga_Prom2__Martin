@@ -14,6 +14,11 @@ public class PlayerInput : MonoBehaviour
         moveDir = context.ReadValue<Vector2>().normalized;
     }
 
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        hasInteracted = true;
+    }
+
     private void LateUpdate()
     {
         hasShoot = false;

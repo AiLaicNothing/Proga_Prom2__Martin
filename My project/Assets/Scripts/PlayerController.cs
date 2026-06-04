@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private PlayerInput input;
 
+    public PlayerInput Input => input;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
