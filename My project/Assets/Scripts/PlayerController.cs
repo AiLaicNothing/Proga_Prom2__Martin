@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject buleltPrefab;
 
     public UnitType type;
+    public TeamSide teamSide;
+    private LayerMask unitLayer;
 
     [SerializeField] private Camera mainCam;
 
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleRot();
+        Shoot();
     }
 
     private void FixedUpdate()
@@ -70,5 +73,50 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);
 
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
+    }
+
+    private void Shoot()
+    {
+        if (!input.hasShoot) return;
+
+        Collider[] hits = Physics.OverlapSphere( transform.position, 15, unitLayer);
+
+        Unit closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider hit in hits)
+        {
+            if (!hit.CompareTag("Unit")) continue;
+
+            Unit unit = hit.GetComponent<Unit>();
+
+            if (unit == null) continue;
+
+            // Skip allies
+            if (unit.TeamSide == teamSide) continue;
+
+            float sqrDist = (unit.transform.position - transform.position).sqrMagnitude;
+
+            if (sqrDist < closestDistance)
+            {
+                closestDistance = sqrDist;
+                closestTarget = unit;
+            }
+        }
+
+        if (closestTarget == null) return;
+
+        GameObject bullet = Instantiate(buleltPrefab, firePoint.position, Quaternion.identity);
+
+        Vector3 dir = (closestTarget.transform.position - firePoint.position).normalized;
+
+        bullet.transform.forward = dir;
+
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+        if (bulletRb != null)
+        {
+            bulletRb.linearVelocity = dir * 20f;
+        }
     }
 }
