@@ -343,16 +343,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ea02efde60f5d46a651fcb7f605f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  maxHp: 0
   moveSpeed: 5
   transformSpeed: 10
   rotSpeed: 5
+  damage: 10
   centerPoint: {fileID: 314953687}
   firePoint: {fileID: 1856592943}
   buleltPrefab: {fileID: 100736479735194683, guid: 7dd20406e7dca994bb727aa2e4d601c6, type: 3}
   playerModel: {fileID: 212156503}
   transformModel: {fileID: 600701167}
   type: 4
-  teamSide: 0
+  teamSide: 1
   unitLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -776,6 +778,7 @@ GameObject:
   - component: {fileID: 364969864}
   - component: {fileID: 364969863}
   - component: {fileID: 364969862}
+  - component: {fileID: 364969868}
   m_Layer: 0
   m_Name: Base_Red
   m_TagString: Untagged
@@ -915,6 +918,21 @@ Transform:
   - {fileID: 178008272}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &364969868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364969861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82dcb9da2a79d5e4bb511d148d49e292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBaseAI
+  decisionTime: 3
+  tankCost: 50
+  chopperCost: 40
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
