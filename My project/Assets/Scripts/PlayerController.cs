@@ -1,13 +1,17 @@
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
+    [SerializeField] private float maxHp;
+    private float currentHp;
+
     [SerializeField] private float moveSpeed;
     [SerializeField] private float transformSpeed;
     [SerializeField] private float rotSpeed;
 
     [Header("Shooting")]
+    [SerializeField] private Transform centerPoint;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject buleltPrefab;
 
@@ -15,9 +19,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject transformModel;
     private bool isTransformed;
 
-    public UnitType type;
-    public TeamSide teamSide;
+    [SerializeField] private UnitType type;
+    [SerializeField] private TeamSide teamSide;
     [SerializeField] private LayerMask unitLayer;
+    private Unit closestTarget;
+    private bool hasClosestTarget;
 
     [SerializeField] private Camera mainCam;
 
@@ -25,6 +31,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInput input;
 
     public PlayerInput Input => input;
+    public UnitType Type => type;
+    public TeamSide TeamSide => teamSide;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,11 +41,12 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        
+        currentHp = maxHp;
     }
 
     void Update()
     {
+        CheckClosestTarget();
         HandleRot();
         TransformForm();
         Shoot();
@@ -84,21 +94,28 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);
 
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+        if (hasClosestTarget && closestTarget != null)
+        {
+            Vector3 targetDir = closestTarget.transform.position - centerPoint.position;
+            targetDir.y = 0f;
+
+            Quaternion targetRot = Quaternion.LookRotation(targetDir);
+
+            centerPoint.rotation = Quaternion.Slerp(centerPoint.rotation, targetRot, rotSpeed * Time.deltaTime);
+        }
+        else
+        {
+            centerPoint.rotation = Quaternion.Slerp(centerPoint.rotation, targetRotation, rotSpeed * Time.deltaTime);
+
+        }
     }
 
-    private void Shoot()
+    private void CheckClosestTarget()
     {
-        if (!input.hasShoot) return;
+        Collider[] hits = Physics.OverlapSphere(transform.position, 20, unitLayer);
 
-        if (isTransformed == true)
-        {
-            Debug.Log("Cant shoot is transformed");
-            return;
-        }
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, 15, unitLayer);
-
-        Unit closestTarget = null;
+        closestTarget = null;
         float closestDistance = float.MaxValue;
 
         foreach (Collider hit in hits)
@@ -120,13 +137,34 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (closestTarget == null) return;
+        hasClosestTarget = closestTarget != null;   
+    }
 
-        Debug.Log($"{closestTarget.gameObject.name}");
+    private void Shoot()
+    {
+        if (!input.hasShoot) return;
+
+        if (isTransformed == true)
+        {
+            Debug.Log("Cant shoot is transformed");
+            return;
+        }
+
+        //Debug.Log($"{closestTarget.gameObject.name}");
 
         GameObject bullet = Instantiate(buleltPrefab, firePoint.position, Quaternion.identity);
 
-        Vector3 dir = (closestTarget.transform.position - firePoint.position).normalized;
+
+        Vector3 dir;
+
+        if (closestTarget != null)
+        {
+            dir = (closestTarget.transform.position - firePoint.position);
+        }
+        else
+        {
+            dir = firePoint.transform.forward;
+        }
 
         bullet.transform.forward = dir;
 
@@ -134,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
         if (bulletRb != null)
         {
-            bulletRb.linearVelocity = dir * 20f;
+            bulletRb.linearVelocity = dir * 22f;
         }
     }
 
@@ -151,6 +189,16 @@ public class PlayerController : MonoBehaviour
             isTransformed = false;
             playerModel.SetActive(true);
             transformModel.SetActive(false);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHp -= damage;
+
+        if (currentHp <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
