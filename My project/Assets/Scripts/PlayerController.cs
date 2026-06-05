@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 velocity = moveDir * desiredSpeed;
 
-        rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
+        rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
     }
 
     private void HandleRot()
