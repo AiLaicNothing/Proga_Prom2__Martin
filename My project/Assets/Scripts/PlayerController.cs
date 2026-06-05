@@ -4,13 +4,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float transformSpeed;
     [SerializeField] private float rotSpeed;
 
     [Header("Shooting")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject buleltPrefab;
 
+    [SerializeField] private GameObject playerModel;
+    [SerializeField] private GameObject transformModel;
+    private bool isTransformed;
+
     public UnitType type;
+    public TeamSide teamSide;
+    private LayerMask unitLayer;
 
     [SerializeField] private Camera mainCam;
 
@@ -31,6 +38,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleRot();
+        TransformForm();
+        Shoot();
     }
 
     private void FixedUpdate()
@@ -41,6 +50,8 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         Vector2 inputDir = input.moveDir;
+
+        float desiredSpeed = isTransformed ? transformSpeed : moveSpeed;
 
         if (mainCam == null) return;
 
@@ -53,6 +64,9 @@ public class PlayerController : MonoBehaviour
         camRight.Normalize();
 
         Vector3 moveDir = camForward * inputDir.y + camRight * inputDir.x;
+        moveDir.Normalize();
+
+        Vector3 velocity = moveDir * desiredSpeed;
 
         rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
     }
@@ -70,5 +84,68 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);
 
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
+    }
+
+    private void Shoot()
+    {
+        if (isTransformed) return;
+
+        if (!input.hasShoot) return;
+
+        Collider[] hits = Physics.OverlapSphere( transform.position, 15, unitLayer);
+
+        Unit closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider hit in hits)
+        {
+            if (!hit.CompareTag("Unit")) continue;
+
+            Unit unit = hit.GetComponent<Unit>();
+
+            if (unit == null) continue;
+
+            // Skip allies
+            if (unit.TeamSide == teamSide) continue;
+
+            float sqrDist = (unit.transform.position - transform.position).sqrMagnitude;
+
+            if (sqrDist < closestDistance)
+            {
+                closestDistance = sqrDist;
+                closestTarget = unit;
+            }
+        }
+
+        if (closestTarget == null) return;
+
+        GameObject bullet = Instantiate(buleltPrefab, firePoint.position, Quaternion.identity);
+
+        Vector3 dir = (closestTarget.transform.position - firePoint.position).normalized;
+
+        bullet.transform.forward = dir;
+
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+        if (bulletRb != null)
+        {
+            bulletRb.linearVelocity = dir * 20f;
+        }
+    }
+
+    private void TransformForm()
+    {
+        if (input.isTransformed)
+        {
+            isTransformed = true;
+            playerModel.SetActive(false);
+            transformModel.SetActive(true);
+        }
+        else
+        {
+            isTransformed = false;
+            playerModel.SetActive(true);
+            transformModel.SetActive(false);
+        }
     }
 }
