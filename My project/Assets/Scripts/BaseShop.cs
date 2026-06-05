@@ -31,6 +31,7 @@ public class BaseShop : MonoBehaviour
 
         Tank tank = tankPrefab.GetComponent<Tank>();
         tank.SetTargetPos(enemyBase);
+        tank.SetTeam(teamSide);
     }
 
     private void SpawnChopper(GameObject prefab, int cost)
@@ -41,5 +42,6 @@ public class BaseShop : MonoBehaviour
 
         Chopper chopper = chopperPrefab.GetComponent<Chopper>();
         chopper.SetPatrolPoint(patrolPoints);
+        chopper.SetTeam(teamSide);
     }
 }
