@@ -14,7 +14,7 @@ public class Base : MonoBehaviour
 
             if (unit == null) return;
 
-            if (unit.TeamSide != teamSide && unit.UnitType == UnitType.Tank || unit.UnitType == UnitType.SuperTank)
+            if (unit.TeamSide != teamSide && (unit.UnitType == UnitType.Tank || unit.UnitType == UnitType.SuperTank))
             {
                 GameManager.Instance.EndGame(unit.TeamSide);
             }
