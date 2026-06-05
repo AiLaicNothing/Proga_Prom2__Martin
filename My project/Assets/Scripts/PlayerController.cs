@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float rotSpeed;
 
     [Header("Shooting")]
+    [SerializeField] private float damage;
     [SerializeField] private Transform centerPoint;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject buleltPrefab;
@@ -169,6 +170,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         bullet.transform.forward = dir;
 
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+        bullet.GetComponent<Bullet>().SetTeam(teamSide);
+        bullet.GetComponent<Bullet>().SetDamage(damage);
 
         if (bulletRb != null)
         {
