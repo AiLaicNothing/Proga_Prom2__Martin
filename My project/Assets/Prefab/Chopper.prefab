@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 1603332347911955230}
   - component: {fileID: 3335668937956773050}
   - component: {fileID: 4653056263155898011}
-  - component: {fileID: 5658779997678289178}
-  - component: {fileID: 4391132029821090074}
+  - component: {fileID: 6362112112577512797}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: Chopper
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +84,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &5658779997678289178
+--- !u!114 &6362112112577512797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,34 +93,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339357412041531450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7927e499487ee0e4aabb3b6fbc0a5679, type: 3}
+  m_Script: {fileID: 11500000, guid: ae5d061e1b3f914409005cd0251c3705, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tank
+  m_EditorClassIdentifier: Assembly-CSharp::Chopper
   stats: {fileID: 11400000, guid: 6774fc4c36090f54bbb184fb25afbc2f, type: 2}
   teamSide: 0
-  agent: {fileID: 3335668937956773050}
-  enemyBase: {fileID: 0}
---- !u!65 &4391132029821090074
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1339357412041531450}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  patrolPoints: []
+  reachDistance: 0.5
 --- !u!1 &8081389791535802659
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +111,7 @@ GameObject:
   - component: {fileID: 5278329669874505597}
   - component: {fileID: 3625357614442463313}
   - component: {fileID: 1311999982203464076}
+  - component: {fileID: 1788345889620540191}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -149,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 8081389791535802659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -212,3 +191,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1788345889620540191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8081389791535802659}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

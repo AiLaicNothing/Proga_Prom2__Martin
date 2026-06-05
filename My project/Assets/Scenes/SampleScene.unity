@@ -637,7 +637,7 @@ MonoBehaviour:
   teamSide: 0
   spawnPoint: {fileID: 738725621}
   tankPrefab: {fileID: 1339357412041531450, guid: 5a640f2733fd84f4ba502d85887c8d66, type: 3}
-  chopperPrefab: {fileID: 0}
+  chopperPrefab: {fileID: 1339357412041531450, guid: 5d113fab391590349a9db1d3cc635e30, type: 3}
   patrolPoints:
   - {fileID: 274467849}
   - {fileID: 2066563563}
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   teamSide: 1
   spawnPoint: {fileID: 459032365}
   tankPrefab: {fileID: 1339357412041531450, guid: 5a640f2733fd84f4ba502d85887c8d66, type: 3}
-  chopperPrefab: {fileID: 0}
+  chopperPrefab: {fileID: 1339357412041531450, guid: 5d113fab391590349a9db1d3cc635e30, type: 3}
   patrolPoints:
   - {fileID: 791437785}
   - {fileID: 1648839872}
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec97d64016ee36499a21d70dfea662b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Base
-  teamSide: 0
+  teamSide: 1
 --- !u!65 &848120616
 BoxCollider:
   m_ObjectHideFlags: 0

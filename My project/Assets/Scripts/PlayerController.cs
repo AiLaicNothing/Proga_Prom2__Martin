@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDir = camForward * inputDir.y + camRight * inputDir.x;
 
-        Vector3 velocity = moveDir * moveSpeed;
+        rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
     }
 
     private void HandleRot()
