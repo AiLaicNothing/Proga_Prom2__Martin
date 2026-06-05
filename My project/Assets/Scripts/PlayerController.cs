@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public UnitType type;
     public TeamSide teamSide;
-    private LayerMask unitLayer;
+    [SerializeField] private LayerMask unitLayer;
 
     [SerializeField] private Camera mainCam;
 
@@ -88,11 +88,15 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (isTransformed) return;
-
         if (!input.hasShoot) return;
 
-        Collider[] hits = Physics.OverlapSphere( transform.position, 15, unitLayer);
+        if (isTransformed == true)
+        {
+            Debug.Log("Cant shoot is transformed");
+            return;
+        }
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, 15, unitLayer);
 
         Unit closestTarget = null;
         float closestDistance = float.MaxValue;
@@ -105,7 +109,6 @@ public class PlayerController : MonoBehaviour
 
             if (unit == null) continue;
 
-            // Skip allies
             if (unit.TeamSide == teamSide) continue;
 
             float sqrDist = (unit.transform.position - transform.position).sqrMagnitude;
@@ -118,6 +121,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (closestTarget == null) return;
+
+        Debug.Log($"{closestTarget.gameObject.name}");
 
         GameObject bullet = Instantiate(buleltPrefab, firePoint.position, Quaternion.identity);
 

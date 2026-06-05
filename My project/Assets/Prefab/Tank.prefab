@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3335668937956773050}
   - component: {fileID: 4653056263155898011}
   - component: {fileID: 5658779997678289178}
-  - component: {fileID: 4391132029821090074}
-  m_Layer: 0
+  - component: {fileID: 959809869229983890}
+  m_Layer: 9
   m_Name: Tank
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   teamSide: 0
   agent: {fileID: 3335668937956773050}
   enemyBase: {fileID: 0}
---- !u!65 &4391132029821090074
+--- !u!65 &959809869229983890
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

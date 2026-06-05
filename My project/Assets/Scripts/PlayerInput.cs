@@ -23,7 +23,10 @@ public class PlayerInput : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        hasShoot = true;
+        if (context.started)
+        {
+            hasShoot = true;
+        }
     }
 
     public void OnTransform(InputAction.CallbackContext context)
