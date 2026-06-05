@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damage = 5;
+    private float damage = 5;
     private TeamSide teamSide;
 
     public void SetTeam(TeamSide team)
     {
         teamSide = team;
+    }
+
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
     }
 
     private void OnTriggerEnter(Collider other)

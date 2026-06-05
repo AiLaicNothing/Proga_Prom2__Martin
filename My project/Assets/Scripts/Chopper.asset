@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6be2e9f7226e9b741a46ec13fccb0cc5, type: 3}
-  m_Name: Tank
+  m_Name: Chopper
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitType: 0
-  maxHealth: 50
-  damage: 10
-  moveSpeed: 3
-  attackRange: 10
-  attackCooldown: 1.5
-  cost: 30
+  unitType: 2
+  maxHealth: 20
+  damage: 6
+  moveSpeed: 8
+  attackRange: 15
+  attackCooldown: 0.6
+  cost: 60
