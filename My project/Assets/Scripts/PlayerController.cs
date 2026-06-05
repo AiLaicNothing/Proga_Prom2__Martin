@@ -4,11 +4,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float transformSpeed;
     [SerializeField] private float rotSpeed;
 
     [Header("Shooting")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject buleltPrefab;
+
+    [SerializeField] private GameObject playerModel;
+    [SerializeField] private GameObject transformModel;
+    private bool isTransformed;
 
     public UnitType type;
     public TeamSide teamSide;
@@ -33,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleRot();
+        TransformForm();
         Shoot();
     }
 
@@ -45,6 +51,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputDir = input.moveDir;
 
+        float desiredSpeed = isTransformed ? transformSpeed : moveSpeed;
+
         if (mainCam == null) return;
 
         Vector3 camForward = mainCam.transform.forward;
@@ -56,8 +64,11 @@ public class PlayerController : MonoBehaviour
         camRight.Normalize();
 
         Vector3 moveDir = camForward * inputDir.y + camRight * inputDir.x;
+        moveDir.Normalize();
 
-        Vector3 velocity = moveDir * moveSpeed;
+        Vector3 velocity = moveDir * desiredSpeed;
+
+        rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
     }
 
     private void HandleRot()
@@ -77,6 +88,8 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        if (isTransformed) return;
+
         if (!input.hasShoot) return;
 
         Collider[] hits = Physics.OverlapSphere( transform.position, 15, unitLayer);
@@ -117,6 +130,22 @@ public class PlayerController : MonoBehaviour
         if (bulletRb != null)
         {
             bulletRb.linearVelocity = dir * 20f;
+        }
+    }
+
+    private void TransformForm()
+    {
+        if (input.isTransformed)
+        {
+            isTransformed = true;
+            playerModel.SetActive(false);
+            transformModel.SetActive(true);
+        }
+        else
+        {
+            isTransformed = false;
+            playerModel.SetActive(true);
+            transformModel.SetActive(false);
         }
     }
 }

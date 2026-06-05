@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
 
     public bool hasInteracted;
 
+    public bool isTransformed;
+
     public void MoveInput(InputAction.CallbackContext context)
     {
         moveDir = context.ReadValue<Vector2>().normalized;
@@ -19,9 +21,22 @@ public class PlayerInput : MonoBehaviour
         hasInteracted = true;
     }
 
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        hasShoot = true;
+    }
+
+    public void OnTransform(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isTransformed = !isTransformed;
+        }
+    }
+
     private void LateUpdate()
     {
-        hasShoot = false;
         hasInteracted = false;
+        hasShoot = false;
     }
 }
