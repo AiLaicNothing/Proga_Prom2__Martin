@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, IDamageable
 {
     [SerializeField] protected UnitStats stats;
     [SerializeField] protected TeamSide teamSide;

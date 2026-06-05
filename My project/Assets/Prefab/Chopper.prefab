@@ -34,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5278329669874505597}
+  - {fileID: 3534423123083902922}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &3335668937956773050
@@ -97,8 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5d061e1b3f914409005cd0251c3705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chopper
-  stats: {fileID: 11400000, guid: 6774fc4c36090f54bbb184fb25afbc2f, type: 2}
+  stats: {fileID: 11400000, guid: 004fa394a57be5246ae30f54a0cd554a, type: 2}
   teamSide: 0
+  agent: {fileID: 0}
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  centerPoint: {fileID: 3534423123083902922}
+  firePoint: {fileID: 6419333261139836465}
+  bulletPrefab: {fileID: 100736479735194683, guid: 7dd20406e7dca994bb727aa2e4d601c6, type: 3}
   patrolPoints: []
   reachDistance: 0.5
 --- !u!65 &8638301252017649886
@@ -122,6 +130,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 2.8, z: 0}
+--- !u!1 &3025255578773469356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6419333261139836465}
+  m_Layer: 9
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6419333261139836465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025255578773469356}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3534423123083902922}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8081389791535802659
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,3 +251,35 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8288125068954667954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3534423123083902922}
+  m_Layer: 9
+  m_Name: CenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3534423123083902922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288125068954667954}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.03, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6419333261139836465}
+  m_Father: {fileID: 1603332347911955230}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
