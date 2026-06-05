@@ -8,13 +8,16 @@ public class Base : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Unit unit = other.GetComponent<Unit>();
-
-        if (unit == null) return;
-
-        if (unit.TeamSide != teamSide && unit.UnitType == UnitType.Tank || unit.UnitType == UnitType.SuperTank)
+        if (other.gameObject.CompareTag("Unit"))
         {
-            GameManager.Instance.EndGame(unit.TeamSide);
+            Unit unit = other.GetComponent<Unit>();
+
+            if (unit == null) return;
+
+            if (unit.TeamSide != teamSide && unit.UnitType == UnitType.Tank || unit.UnitType == UnitType.SuperTank)
+            {
+                GameManager.Instance.EndGame(unit.TeamSide);
+            }
         }
     }
 }

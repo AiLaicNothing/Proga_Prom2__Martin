@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerChopperShop : MonoBehaviour
+public class PlayerTankShop : MonoBehaviour
 {
     private BaseShop shop;
     private bool inside;
@@ -18,7 +18,7 @@ public class PlayerChopperShop : MonoBehaviour
 
         if (player.Input.hasInteracted)
         {
-            shop.BuyChopper();
+            shop.BuyTank();
         }
     }
 
